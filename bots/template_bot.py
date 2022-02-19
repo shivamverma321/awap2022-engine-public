@@ -39,6 +39,21 @@ class MyPlayer(Player):
                         total_terrain += map[x + i][y + j].passability 
                         total_population += map[x + i][y + j].population
                 nodes.append((x, y, total_terrain, total_population))
+        
+        my_structs = []
+        # step 2: run dijkstra's to get distance to every node 
+        dist = [[sys.maxint for i in range(self.MAP_WIDTH)] for j in range(self.MAP_HEIGHT)]
+        # run through the grid the see which nodes are the homies 
+        for x in range(self.MAP_WIDTH): 
+            for y in range(self.MAP_HEIGHT): 
+                st = map[x][y].structure 
+                if st is not None: 
+                    if st.team == player_info.team: 
+                        dist[x][y] = 0
+                        my_structs.append(st)
+
+        # run multisourced dijkstra (consider doing every turn to rerank)
+
         print(nodes)
         if(turn_num > 1): 
             assert(1 == 2)
